@@ -59,11 +59,7 @@ const Home = () => {
                 Reliable Taxi Service in Your City
               </h1>
               <p className="text-xl mb-8 text-white/90">
-                Book your ride now with professional drivers, transparent pricing, and 24/7 availability.
-                <button onClick={() => {
-                  let temp = {};
-                  console.log(temp.length());
-                }}>Click Me</button>
+Book your ride now with professional drivers, transparent pricing, and 24/7 availability.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/book">
@@ -140,10 +136,10 @@ const Home = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <ServiceCard
+<ServiceCard
                 key={service.Id}
                 service={service}
-                link={`/services/${service.name.toLowerCase().replace(/\s+/g, '-')}`}
+                link={`/services/${service.Name.toLowerCase().replace(/\s+/g, '-')}`}
               />
             ))}
           </div>

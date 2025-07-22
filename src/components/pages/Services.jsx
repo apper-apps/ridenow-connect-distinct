@@ -71,10 +71,10 @@ const Services = () => {
       {/* Services Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map((service) => (
-          <ServiceCard
+<ServiceCard
             key={service.Id}
             service={service}
-            link={`/services/${service.name.toLowerCase().replace(/\s+/g, '-')}`}
+            link={`/services/${service.Name.toLowerCase().replace(/\s+/g, '-')}`}
           />
         ))}
       </div>

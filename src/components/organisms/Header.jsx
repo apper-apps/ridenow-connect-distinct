@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AuthContext } from "@/App";
 import ApperIcon from "@/components/ApperIcon";
+import Services from "@/components/pages/Services";
+import Contact from "@/components/pages/Contact";
+import Home from "@/components/pages/Home";
+import Fleet from "@/components/pages/Fleet";
+import Pricing from "@/components/pages/Pricing";
+import Routes from "@/components/pages/Routes";
 import NavDropdown from "@/components/molecules/NavDropdown";
 import Button from "@/components/atoms/Button";
-
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -62,7 +69,7 @@ const Header = () => {
               className={`transition-colors duration-200 ${isActive("/contact") ? "text-primary" : "text-gray-700 hover:text-primary"}`}
             >
               Contact
-            </Link>
+</Link>
           </nav>
 
           {/* Header Actions */}
@@ -74,6 +81,10 @@ const Header = () => {
               <Button size="sm">Book Now</Button>
             </Link>
             
+            {/* User Profile and Logout */}
+            <UserProfile />
+            
+            {/* Mobile Menu Button */}
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -148,6 +159,52 @@ const Header = () => {
         )}
       </div>
     </header>
+};
+
+// User Profile Component
+const UserProfile = () => {
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { logout } = useContext(AuthContext);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  if (!isAuthenticated) return null;
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setShowDropdown(!showDropdown)}
+        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+      >
+        <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+          <ApperIcon name="User" size={16} className="text-white" />
+        </div>
+        <span className="hidden md:block text-gray-700 text-sm font-medium">
+          {user?.firstName || 'User'}
+        </span>
+        <ApperIcon name="ChevronDown" size={16} className="text-gray-500" />
+      </button>
+
+      {showDropdown && (
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
+          <div className="p-3 border-b">
+            <p className="text-sm font-medium text-gray-900">
+              {user?.firstName} {user?.lastName}
+            </p>
+            <p className="text-xs text-gray-500">{user?.emailAddress}</p>
+          </div>
+          <button
+            onClick={() => {
+              logout();
+              setShowDropdown(false);
+            }}
+            className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-b-lg transition-colors duration-200 flex items-center space-x-2"
+          >
+            <ApperIcon name="LogOut" size={14} />
+            <span>Logout</span>
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
