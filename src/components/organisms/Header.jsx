@@ -157,9 +157,12 @@ const Header = () => {
             </nav>
           </div>
         )}
-      </div>
+</div>
     </header>
+  );
 };
+
+export default Header;
 
 // User Profile Component
 const UserProfile = () => {
@@ -207,5 +210,3 @@ const UserProfile = () => {
     </div>
   );
 };
-
-export default Header;
